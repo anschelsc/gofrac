@@ -6,5 +6,10 @@ import (
 )
 
 func main() {
-	fmt.Println(frac.Hello())
+	f,err:=frac.New(15,5)
+	if err!=nil{
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(f)
 }
