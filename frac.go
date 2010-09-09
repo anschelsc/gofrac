@@ -88,7 +88,7 @@ func (f *Frac) Plus(other *Frac) *Frac {
 		ret.simplify()
 		return ret
 	}
-	return Frac{f.num * other.den, f.den * other.den, f.positive}.Add(Frac{other.num * f.den, other.den * f.den, other.positive})
+	return (&Frac{f.num * other.den, f.den * other.den, f.positive}).Plus(&Frac{other.num * f.den, other.den * f.den, other.positive})
 }
 
 func (f *Frac) Negative() *Frac {
@@ -109,24 +109,35 @@ func (f *Frac) Times(other *Frac) *Frac {
 	return ret
 }
 
-func (f *Frac) Divided(other *Frac) *Frac {
-	return f.Times(other.Inverse())
+func (f *Frac) Divided(other *Frac) (*Frac, os.Error) {
+	if other.num == 0 {
+		return nil, DivByZero
+	}
+	return f.Times(other.Inverse()), nil
 }
 
-func (f *Frac) Numerator() uint {
-	return f.num
+func (f *Frac) Numerator() int {
+	ret := int(f.num)
+	if !f.positive {
+		ret *= -1
+	}
+	return ret
 }
 
-func (f *Frac) Denominator() uint {
-	return f.den
+func (f *Frac) Denominator() int {
+	return int(f.den)
 }
 
 func (f *Frac) Float() float {
-	return float(f.num)/float(f.den)
+	ret := float(f.num) / float(f.den)
+	if !f.positive {
+		ret *= -1
+	}
+	return ret
 }
 
 func (f *Frac) Mixed() string {
-	if f.positive{
+	if f.positive {
 		return fmt.Sprintf("%d %d/%d", f.num/f.den, f.num%f.den, f.den)
 	}
 	return fmt.Sprintf("-%d %d/%d", f.num/f.den, f.num%f.den, f.den)
