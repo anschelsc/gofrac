@@ -1,13 +1,11 @@
-all: test
+# Copyright 2009 The Go Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
 
-frac.6: frac.go
-	6g frac.go
+include $(GOROOT)/src/Make.inc
 
-test.6: frac.6 test.go
-	6g test.go
+TARG=frac
+GOFILES=\
+	frac.go\
 
-test: test.6
-	6l -o test test.6
-
-clean:
-	rm -f test test.6 frac.6
+include $(GOROOT)/src/Make.pkg
