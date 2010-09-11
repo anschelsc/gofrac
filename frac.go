@@ -16,6 +16,13 @@ const (
 	DivByZero Error = iota
 )
 
+func abs(i int) uint {
+	if i>=0{
+		return uint(i)
+	}
+	return uint(-i)
+}
+
 func (e Error) String() string {
 	switch e {
 	case DivByZero:
@@ -36,8 +43,8 @@ func New(num, den int) (*Frac, os.Error) {
 		return nil, DivByZero
 	}
 	f := &Frac{
-		num:      uint(num),
-		den:      uint(den),
+		num:      abs(num),
+		den:      abs(den),
 		positive: num == 0 || ((num > 0) == (den > 0)),
 	}
 	f.simplify()
