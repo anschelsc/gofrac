@@ -163,7 +163,7 @@ func (f *Frac) Mixed() string {
 	if f.num < f.den {
 		return f.String()
 	}
-	if f.num == f.den {
+	if f.den == 1 {
 		return fmt.Sprint(f.Numerator())
 	}
 	if f.positive {
