@@ -160,12 +160,36 @@ func TestNumAndDen(t *testing.T) {
 }
 
 func TestInverse(t *testing.T) {
-	seventeen,_:=New(17,1)
-	threeSeventeenths,_:=New(3,17)
-	if s:=seventeen.Inverse().String();s!="1/17"{
+	seventeen, _ := New(17, 1)
+	threeSeventeenths, _ := New(3, 17)
+	if s := seventeen.Inverse().String(); s != "1/17" {
 		t.Errorf("(1/17)^-1 = %v", s)
 	}
-	if s:=threeSeventeenths.Inverse().String();s!="17/3"{
+	if s := threeSeventeenths.Inverse().String(); s != "17/3" {
 		t.Errorf("(3/17)^-1 = %v", s)
+	}
+}
+
+func TestMixed(t *testing.T) {
+	three, _ := New(3, 1)
+	third, _ := New(1, 3)
+	fourThirds, _ := New(4, 3)
+	if m := three.Mixed(); m != "3" {
+		t.Errorf("%v = %v", three, m)
+	}
+	if m := third.Mixed(); m != "1/3" {
+		t.Errorf("%v = %v", third, m)
+	}
+	if m := fourThirds.Mixed(); m != "1 1/3" {
+		t.Errorf("%v = %v", fourThirds, m)
+	}
+	if m := three.Negative().Mixed(); m != "-3" {
+		t.Errorf("%v = %v", three.Negative(), m)
+	}
+	if m := third.Negative().Mixed(); m != "-1/3" {
+		t.Errorf("%v = %v", third.Negative(), m)
+	}
+	if m := fourThirds.Negative().Mixed(); m != "-1 1/3" {
+		t.Errorf("%v = %v", fourThirds.Negative(), m)
 	}
 }
