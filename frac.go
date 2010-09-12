@@ -11,7 +11,7 @@ import (
 )
 
 type Frac struct {
-	num, den uint
+	num, den uint64
 	positive bool
 }
 
@@ -21,11 +21,11 @@ const (
 	DivByZero error = iota
 )
 
-func abs(i int) uint {
+func abs(i int64) uint64 {
 	if i>=0{
-		return uint(i)
+		return uint64(i)
 	}
-	return uint(-i)
+	return uint64(-i)
 }
 
 func (e error) String() string {
@@ -36,14 +36,14 @@ func (e error) String() string {
 	return "Unknown error."
 }
 
-func gcd(x, y uint) uint {
+func gcd(x, y uint64) uint64 {
 	for y != 0 {
 		x, y = y, x%y
 	}
 	return x
 }
 
-func New(num, den int) (*Frac, os.Error) {
+func New(num, den int64) (*Frac, os.Error) {
 	if den == 0 {
 		return nil, DivByZero
 	}
@@ -128,16 +128,16 @@ func (f *Frac) Divided(other *Frac) (*Frac, os.Error) {
 	return f.Times(other.Inverse()), nil
 }
 
-func (f *Frac) Numerator() int {
-	ret := int(f.num)
+func (f *Frac) Numerator() int64 {
+	ret := int64(f.num)
 	if !f.positive {
 		ret *= -1
 	}
 	return ret
 }
 
-func (f *Frac) Denominator() int {
-	return int(f.den)
+func (f *Frac) Denominator() int64 {
+	return int64(f.den)
 }
 
 func (f *Frac) Float() float {
