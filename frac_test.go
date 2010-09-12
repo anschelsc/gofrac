@@ -128,16 +128,44 @@ func TestAddAndNeg(t *testing.T) {
 	if s := minusThird.String(); s != "-1/3" {
 		t.Errorf("-(1/3) = %v", s)
 	}
-	if s:=half.Plus(third).String();s!="5/6"{
-		t.Errorf("(1/2) + (1/3) = %v",s)
+	if s := half.Plus(third).String(); s != "5/6" {
+		t.Errorf("(1/2) + (1/3) = %v", s)
 	}
-	if s:=half.Plus(minusThird).String();s!="1/6"{
-		t.Errorf("(1/2) - (1/3) = %v",s)
+	if s := half.Plus(minusThird).String(); s != "1/6" {
+		t.Errorf("(1/2) - (1/3) = %v", s)
 	}
-	if s:=minusHalf.Plus(third).String(); s!="-1/6"{
-		t.Errorf("-(1/2) + (1/3) = %v",s)
+	if s := minusHalf.Plus(third).String(); s != "-1/6" {
+		t.Errorf("-(1/2) + (1/3) = %v", s)
 	}
-	if s:=minusHalf.Plus(minusThird).String();s!="-5/6"{
-		t.Errorf("-(1/2) - (1/3) = %v",s)
+	if s := minusHalf.Plus(minusThird).String(); s != "-5/6" {
+		t.Errorf("-(1/2) - (1/3) = %v", s)
+	}
+}
+
+func TestNumAndDen(t *testing.T) {
+	half, _ := New(1, 2)
+	minusHalf, _ := New(1, -2)
+	if n := half.Numerator(); n != 1 {
+		t.Errorf("half.Numerator() == %v", n)
+	}
+	if n := half.Denominator(); n != 2 {
+		t.Errorf("half.Denominator() == %v", n)
+	}
+	if n := minusHalf.Numerator(); n != -1 {
+		t.Errorf("minusHalf.Numerator() == %v", n)
+	}
+	if n := minusHalf.Denominator(); n != 2 {
+		t.Errorf("minusHalf.Denominator() == %v", n)
+	}
+}
+
+func TestInverse(t *testing.T) {
+	seventeen,_:=New(17,1)
+	threeSeventeenths,_:=New(3,17)
+	if s:=seventeen.Inverse().String();s!="1/17"{
+		t.Errorf("(1/17)^-1 = %v", s)
+	}
+	if s:=threeSeventeenths.Inverse().String();s!="17/3"{
+		t.Errorf("(3/17)^-1 = %v", s)
 	}
 }
