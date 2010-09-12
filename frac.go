@@ -60,10 +60,7 @@ func New(num, den int64) (*Frac, os.Error) {
 
 //f.String() satisfies fmt.Stringer
 func (f *Frac) String() string {
-	if f.positive {
-		return fmt.Sprintf("%d/%d", f.num, f.den)
-	}
-	return fmt.Sprintf("-%d/%d", f.num, f.den)
+	return fmt.Sprintf("%d/%d", f.Numerator(), f.Denominator())
 }
 
 func (f *Frac) simplify() {
@@ -163,6 +160,12 @@ func (f *Frac) Float64() float64 {
 
 //f.Mixed() returns a string like "2 1/3".
 func (f *Frac) Mixed() string {
+	if f.num < f.den {
+		return f.String()
+	}
+	if f.num == f.den {
+		return fmt.Sprint(f.Numerator())
+	}
 	if f.positive {
 		return fmt.Sprintf("%d %d/%d", f.num/f.den, f.num%f.den, f.den)
 	}
