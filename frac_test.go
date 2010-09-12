@@ -54,7 +54,7 @@ func TestNew(t *testing.T) {
 	}
 
 	f, err = New(13, 0)
-	if err.(Error) != DivByZero {
+	if err.(error) != DivByZero {
 		t.Errorf("Expected DivByZero from New(13, 0), got %v", err)
 	}
 

@@ -1,3 +1,8 @@
+//Copyright 2010 Anschel Schaffer-Cohen
+//Under go's BSD-style license
+//at $GOROOT/LICENSE
+
+//The frac package implements high-precision fractions.
 package frac
 
 import (
@@ -10,10 +15,10 @@ type Frac struct {
 	positive bool
 }
 
-type Error uint
+type error uint
 
 const (
-	DivByZero Error = iota
+	DivByZero error = iota
 )
 
 func abs(i int) uint {
@@ -23,7 +28,7 @@ func abs(i int) uint {
 	return uint(-i)
 }
 
-func (e Error) String() string {
+func (e error) String() string {
 	switch e {
 	case DivByZero:
 		return "Attempt to divide by zero."
