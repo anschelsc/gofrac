@@ -6,8 +6,8 @@
 package frac
 
 import (
-	"os"
 	"fmt"
+    "errors"
 )
 
 //A Frac is a fraction.
@@ -16,25 +16,13 @@ type Frac struct {
 	positive bool
 }
 
-type error uint
-
-const (
-	DivByZero error = iota
-)
+var DivByZero = errors.New("Attempt to divide by zero.")
 
 func abs(i int64) uint64 {
 	if i >= 0 {
 		return uint64(i)
 	}
 	return uint64(-i)
-}
-
-func (e error) String() string {
-	switch e {
-	case DivByZero:
-		return "Attempt to divide by zero."
-	}
-	return "Unknown error."
 }
 
 func gcd(x, y uint64) uint64 {
@@ -45,7 +33,7 @@ func gcd(x, y uint64) uint64 {
 }
 
 //New() returns a *Frac unless den==0
-func New(num, den int64) (*Frac, os.Error) {
+func New(num, den int64) (*Frac, error) {
 	if den == 0 {
 		return nil, DivByZero
 	}
@@ -128,7 +116,7 @@ func (f *Frac) Times(other *Frac) *Frac {
 }
 
 //f.Divided(other) returns f ÷ other, leaving both unchanged.
-func (f *Frac) Divided(other *Frac) (*Frac, os.Error) {
+func (f *Frac) Divided(other *Frac) (*Frac, error) {
 	if other.num == 0 {
 		return nil, DivByZero
 	}
